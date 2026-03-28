@@ -137,10 +137,10 @@ fn make_config() -> (MyConfig, Perm) {
     let challenge_mmcs = ChallengeMmcs::new(val_mmcs.clone());
 
     let fri_params = FriParameters {
-        log_blowup: 1,
+        log_blowup: 3,
         log_final_poly_len: 0,
         max_log_arity: 1,
-        num_queries: 100,
+        num_queries: 28,
         commit_proof_of_work_bits: 16,
         query_proof_of_work_bits: 16,
         mmcs: challenge_mmcs,
