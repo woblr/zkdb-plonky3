@@ -21,16 +21,9 @@ WORKDIR /app
 # Install system deps for linking
 RUN apt-get update && apt-get install -y pkg-config libssl-dev && rm -rf /var/lib/apt/lists/*
 
-# Cache dependencies first (layer caching)
+# Copy everything and build (git deps can't use layer cache anyway)
 COPY Cargo.toml Cargo.lock ./
-RUN mkdir src && echo "fn main() {}" > src/main.rs && echo "" > src/lib.rs
-RUN cargo build --release 2>/dev/null || true
-RUN rm -rf src
-
-# Build the real source
 COPY src/ src/
-# Touch main.rs to ensure Cargo rebuilds the binary
-RUN touch src/main.rs
 RUN cargo build --release
 
 # ─────────────────────────────────────────────────────────────────────────────
