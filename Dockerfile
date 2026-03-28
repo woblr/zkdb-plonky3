@@ -21,6 +21,11 @@ WORKDIR /app
 # Install system deps for linking
 RUN apt-get update && apt-get install -y pkg-config libssl-dev && rm -rf /var/lib/apt/lists/*
 
+# Enable native CPU instructions (AVX2/AVX512 on the server that builds this image).
+# Coolify builds and runs on the same machine, so native is safe and appropriate.
+# This is the biggest single speedup for FRI NTT operations.
+ENV RUSTFLAGS="-C target-cpu=native"
+
 # Copy everything and build (git deps can't use layer cache anyway)
 COPY Cargo.toml Cargo.lock ./
 COPY src/ src/
