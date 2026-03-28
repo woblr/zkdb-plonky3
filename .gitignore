@@ -1,0 +1,27 @@
+# Rust build artifacts
+target/
+
+# Node / Next.js
+frontend/node_modules/
+frontend/.next/
+frontend/.next/
+frontend/.env.local
+
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Logs
+*.log
+
+# Env files
+.env
+.env.local
+.env.production
+
+# Test artifacts
+target/
