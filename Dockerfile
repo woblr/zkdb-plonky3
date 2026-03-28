@@ -15,7 +15,7 @@ RUN npm run build
 # ─────────────────────────────────────────────────────────────────────────────
 # Stage 2: Build Rust backend (release mode — mandatory for ZK performance)
 # ─────────────────────────────────────────────────────────────────────────────
-FROM rust:1.78-slim AS rust-builder
+FROM rustlang/rust:nightly-slim AS rust-builder
 WORKDIR /app
 
 # Install system deps for linking
