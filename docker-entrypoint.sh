@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 echo "Starting zkDB Plonky3..."
@@ -14,8 +14,11 @@ node server.js &
 FRONTEND_PID=$!
 echo "Frontend started (PID $FRONTEND_PID) on :3000"
 
-# If either process dies, kill the other and exit
-wait -n 2>/dev/null || true
-echo "A process exited. Shutting down..."
-kill $BACKEND_PID $FRONTEND_PID 2>/dev/null || true
+# Trap signals and kill both on exit
+trap "echo 'Shutting down...'; kill $BACKEND_PID $FRONTEND_PID 2>/dev/null; exit 0" TERM INT
+
+# Wait for either process to exit (bash 4.3+ feature)
+wait -n $BACKEND_PID $FRONTEND_PID
+echo "A process exited unexpectedly. Shutting down..."
+kill $BACKEND_PID $FRONTEND_PID 2>/dev/null
 wait
